@@ -937,6 +937,14 @@
         opacity: 0;
       }
     }
+
+    .invitation-card img {
+      width: 150px;        /* adjust size */
+      height: 150px;
+      border-radius: 50%;  /* makes it circular */
+      object-fit: cover;   /* keeps image nicely cropped */
+      border: 3px solid #fff; /* optional: adds nice border */
+    }
   </style>
 </head>
 <body>
@@ -993,7 +1001,8 @@
               <div class="invitation-stage">
                 <div class="invitation-card">
                   <div class="card-content">
-                    <div class="card-monogram serif">D&nbsp;C</div>
+                    <!-- <div class="card-monogram serif">S&nbsp;B</div> -->
+                    <img src="./images/pic_2.jpg" alt="Bhavani" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
                     <div>
                       <div style="letter-spacing:0.28em;text-transform:uppercase;font-size:.78rem;color:#91673a;">Wedding Celebration</div>
                       <h2 class="serif">Save the Date</h2>
