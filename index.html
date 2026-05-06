@@ -1061,6 +1061,26 @@
       </div>
     </section>
 
+    <section class="section">
+      <div class="section-inner">
+        <div class="panel countdown-wrap reveal">
+          <div class="section-heading" style="margin-bottom:0;">
+            <span>Countdown</span>
+            <h2 class="serif">Until We Say “I Do”</h2>
+            <p>
+              The celebration draws closer with every moment. We cannot wait to share this beautiful day with you.
+            </p>
+          </div>
+          <div class="countdown-grid" data-countdown="wedding" aria-label="Countdown to the wedding">
+            <div class="countdown-card"><strong data-unit="days">00</strong><span>Days</span></div>
+            <div class="countdown-card"><strong data-unit="hours">00</strong><span>Hours</span></div>
+            <div class="countdown-card"><strong data-unit="minutes">00</strong><span>Minutes</span></div>
+            <div class="countdown-card"><strong data-unit="seconds">00</strong><span>Seconds</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="details">
       <div class="section-inner">
         <div class="section-heading reveal">
@@ -1093,8 +1113,11 @@
             <p>
               A curated dining experience, warm conversations, and a joyful celebration with family and friends.
             </p>
-            <p>Friday, 08 May 2026</p>
+            <p>Sunday, 10 May 2026</p>
             <p>Starts from 11:00 AM</p>
+              <div class="map-wrap" aria-label="Google Maps location for the lunch venue">
+                <img src="./images/_2.jpg" alt="Sripathi Manikanta" onerror="this.src='https://via.placeholder.com/700x900/0d1d18/f2d18b?text=Sripathi Manikanta'">
+              </div>
           </article>
 
           <article class="panel details-card reveal">
@@ -1116,13 +1139,14 @@
       <div class="section-inner">
         <div class="panel countdown-wrap reveal">
           <div class="section-heading" style="margin-bottom:0;">
-            <span>Countdown</span>
-            <h2 class="serif">Until We Say “I Do”</h2>
+            <span>Reception Countdown</span>
+            <h2 class="serif">An Evening to Celebrate Love</h2>
             <p>
-              The celebration draws closer with every moment. We cannot wait to share this beautiful day with you.
+              After the vows, the celebration continues with joy, laughter, and togetherness. 
+              Join us as we celebrate this new beginning with music, smiles, and unforgettable moments.
             </p>
           </div>
-          <div class="countdown-grid" id="countdown" aria-label="Countdown to the wedding">
+          <div class="countdown-grid" data-countdown="reception" aria-label="Countdown to the wedding">
             <div class="countdown-card"><strong data-unit="days">00</strong><span>Days</span></div>
             <div class="countdown-card"><strong data-unit="hours">00</strong><span>Hours</span></div>
             <div class="countdown-card"><strong data-unit="minutes">00</strong><span>Minutes</span></div>
@@ -1334,36 +1358,41 @@ window.addEventListener('pageshow', (e) => {
       createPetals();
       window.addEventListener("resize", createPetals);
 
-      const weddingDate = new Date("2026-05-07T22:30:00+05:30");
-      const countdownUnits = {
-        days: document.querySelector("[data-unit='days']"),
-        hours: document.querySelector("[data-unit='hours']"),
-        minutes: document.querySelector("[data-unit='minutes']"),
-        seconds: document.querySelector("[data-unit='seconds']")
-      };
+      const countdownConfigs = [
+        {
+          element: document.querySelector("[data-countdown='wedding']"),
+          date: new Date("2026-05-08T19:17:00+05:30")
+        },
+        {
+          element: document.querySelector("[data-countdown='reception']"),
+          date: new Date("2026-05-10T11:00:00+05:30") // change as needed
+        }
+      ];
 
-      function updateCountdown() {
+      function updateCountdowns() {
         const now = new Date();
-        const difference = weddingDate.getTime() - now.getTime();
-        const safeDifference = Math.max(0, difference);
 
-        const day = 24 * 60 * 60 * 1000;
-        const hour = 60 * 60 * 1000;
-        const minute = 60 * 1000;
+        countdownConfigs.forEach(config => {
+          const difference = Math.max(0, config.date - now);
 
-        const days = Math.floor(safeDifference / day);
-        const hours = Math.floor((safeDifference % day) / hour);
-        const minutes = Math.floor((safeDifference % hour) / minute);
-        const seconds = Math.floor((safeDifference % minute) / 1000);
+          const day = 24 * 60 * 60 * 1000;
+          const hour = 60 * 60 * 1000;
+          const minute = 60 * 1000;
 
-        countdownUnits.days.textContent = String(days).padStart(2, "0");
-        countdownUnits.hours.textContent = String(hours).padStart(2, "0");
-        countdownUnits.minutes.textContent = String(minutes).padStart(2, "0");
-        countdownUnits.seconds.textContent = String(seconds).padStart(2, "0");
+          const days = Math.floor(difference / day);
+          const hours = Math.floor((difference % day) / hour);
+          const minutes = Math.floor((difference % hour) / minute);
+          const seconds = Math.floor((difference % minute) / 1000);
+
+          config.element.querySelector("[data-unit='days']").textContent = String(days).padStart(2, "0");
+          config.element.querySelector("[data-unit='hours']").textContent = String(hours).padStart(2, "0");
+          config.element.querySelector("[data-unit='minutes']").textContent = String(minutes).padStart(2, "0");
+          config.element.querySelector("[data-unit='seconds']").textContent = String(seconds).padStart(2, "0");
+        });
       }
 
-      updateCountdown();
-      window.setInterval(updateCountdown, 1000);
+      updateCountdowns();
+      setInterval(updateCountdowns, 1000);
 
       function setMusicState(isPlaying, label) {
         musicToggle.setAttribute("aria-pressed", String(isPlaying));
